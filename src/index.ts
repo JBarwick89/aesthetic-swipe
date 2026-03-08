@@ -1,9 +1,15 @@
 import { OpenAPIHono } from '@hono/zod-openapi'
+import { aicProvider } from './providers/aic'
 
 const app = new OpenAPIHono()
 
 app.get('/', (c) => {
   return c.text('Aesthetic Swipe')
+})
+
+app.get('/artwork/random', async (c) => {
+  const artwork = await aicProvider.getRandomArtwork()
+  return c.json(artwork)
 })
 
 app.get('/error', (c) => {
